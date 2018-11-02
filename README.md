@@ -1,6 +1,8 @@
 Mo(oo)lecule
 ============
 
+[![Build Status](https://travis-ci.com/ssbarnea/mooolecule.svg?branch=master)](https://travis-ci.com/ssbarnea/mooolecule)
+
 This is **not** a new project, just a temporary place to keep the experimental
 enablement of molecule testing for tripleo-quickstart.
 

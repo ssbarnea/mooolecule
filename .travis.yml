@@ -1,0 +1,29 @@
+---
+language: python
+cache:
+  - pip
+  - directories:
+      - $HOME/.cache
+before_install:
+  - git clone https://github.com/openstack/tripleo-quickstart.git ../tripleo-quickstart
+os:
+  - linux
+services:
+  - docker
+stages:
+  - make
+#before_install:
+#  - make
+jobs:
+  include:
+    - stage: phase1
+      script:
+        - make
+      python: "2.7"
+      sudo: required
+      dist: xenial
+env:
+  global:
+    - PIP_DISABLE_PIP_VERSION_CHECK=1
+    - PY_COLORS=1
+    - MOLECULE_DEBUG=true
