@@ -1,0 +1,40 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: common
+  tasks:
+    - name: deploy quickstart.sh
+      copy:
+        src: ../../quickstart.sh
+        dest: quickstart.sh
+        mode: preserve
+
+    - name: quickstart.sh --help
+      command: ./quickstart.sh --help
+      changed_when: false
+      tags:
+        - ansible_skip_lint
+
+    - name: quickstart.sh --install-deps
+      command: ./quickstart.sh --install-deps
+      changed_when: |
+          'Installed:' in result.stdout_lines or
+          'Upgraded:' in result.stdout_lines or
+          'Installing collected packages' in result.stdout
+      register: result
+
+    - debug: var=result
+
+    - name: quickstart.sh --install-deps (again)
+      # this should be quick and without changing anything
+      command: ./quickstart.sh --install-deps
+      changed_when: |
+          'Installed:' in result.stdout_lines or
+          'Upgraded:' in result.stdout_lines or
+          'Installing collected packages' in result.stdout
+      failed_when: |
+          result.rc != 0 or result.changed
+      register: result
+
+    - debug: var=result

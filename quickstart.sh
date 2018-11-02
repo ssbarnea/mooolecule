@@ -1,0 +1,1 @@
+../tripleo-quickstart/quickstart.sh
