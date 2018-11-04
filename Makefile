@@ -17,7 +17,7 @@ endif
 molecule:
 	@bash -c "test -f $(QS_DIR)/quickstart.sh || { echo 'ERROR: this needs to be run alongside tripleo-quickstart'; exit 1; }"
 	@echo "INFO:	Building using $(yellow)$(PYTHON_PATH)$(end) [$(PYTHON_VERSION) @ $(PLATFORM)]"
-	@command -v molecule >/dev/null || pip install -q $(PIP_USER) molecule
+	@command -v molecule >/dev/null || pip install -q $(PIP_USER) -r requirements.txt
 	export MOLECULE_DEBUG
 	bash -c "MOLECULE_DEBUG=true molecule --debug test"
 	# --destroy=always
