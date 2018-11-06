@@ -15,9 +15,10 @@ PIP_USER := "--user"
 endif
 
 molecule:
-	@bash -c "test -f $(QS_DIR)/quickstart.sh || { echo 'ERROR: this needs to be run alongside tripleo-quickstart'; exit 1; }"
 	@echo "INFO:	Building using $(yellow)$(PYTHON_PATH)$(end) [$(PYTHON_VERSION) @ $(PLATFORM)]"
+	bash -c "if [ ! -d ../tripleo-quickstart ]; then git clone https://github.com/openstack/tripleo-quickstart.git ../tripleo-quickstart; fi"
+	@bash -c "test -f $(QS_DIR)/quickstart.sh || { echo 'ERROR: this needs to be run alongside tripleo-quickstart'; exit 1; }"
 	@command -v molecule >/dev/null || pip install -q $(PIP_USER) -r requirements.txt
 	export MOLECULE_DEBUG
-	bash -c "MOLECULE_DEBUG=true molecule --debug test"
+	bash -c "MOLECULE_DEBUG=true molecule test"
 	# --destroy=always

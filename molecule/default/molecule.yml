@@ -22,6 +22,11 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+    options:
+      x: ["ANSIBLE0010"]
+      force-color: True
+  env:
+      ANSIBLE_ROLES_PATH: ../../../tripleo-quickstart-extras/roles:../../../tripleo-quickstart/roles
 scenario:
   name: default
 verifier:
